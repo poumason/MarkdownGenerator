@@ -130,8 +130,8 @@ namespace MarkdownWikiGenerator
                 mb.AppendLine();
 
                 string[] head = (this.type.IsEnum)
-                    ? new[] { "Value", "Name", "Summary" }
-                    : new[] { "Type", "Name", "Summary" };
+                    ? new[] { "Value", "Name", "Summary", "Example" }
+                    : new[] { "Type", "Name", "Summary", "Example" };
 
                 IEnumerable<T> seq = array;
                 if (!this.type.IsEnum)
@@ -141,8 +141,9 @@ namespace MarkdownWikiGenerator
 
                 var data = seq.Select(item2 =>
                 {
+                    var example = docs.FirstOrDefault(x => x.MemberName == name(item2))?.Example ?? "";
                     var summary = docs.FirstOrDefault(x => x.MemberName == name(item2))?.Summary ?? "";
-                    return new[] { MarkdownBuilder.MarkdownCodeQuote(type(item2)), finalName(item2), summary };
+                    return new[] { MarkdownBuilder.MarkdownCodeQuote(type(item2)), finalName(item2), summary, example };
                 });
 
                 mb.Table(head, data);

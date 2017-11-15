@@ -37,13 +37,13 @@ namespace MarkdownWikiGenerator
             {
                 if (!Directory.Exists(dest)) Directory.CreateDirectory(dest);
 
-                homeBuilder.HeaderWithLink(2, g.Key, g.Key);
+                homeBuilder.HeaderWithLink(2, g.Key, $"{g.Key}.md");
                 homeBuilder.AppendLine();
 
                 var sb = new StringBuilder();
                 foreach (var item in g.OrderBy(x => x.Name))
                 {
-                    homeBuilder.ListLink(MarkdownBuilder.MarkdownCodeQuote(item.BeautifyName), g.Key + "#" + item.BeautifyName.Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "-").ToLower());
+                    homeBuilder.ListLink(MarkdownBuilder.MarkdownCodeQuote(item.BeautifyName), g.Key + ".md#" + item.BeautifyName.Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "-").ToLower());
 
                     sb.Append(item.ToString());
                 }

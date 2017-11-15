@@ -46,9 +46,11 @@
     <Compile Include="Beautifier.cs" />
     <Compile Include="MarkdownBuilder.cs" />
     <Compile Include="MarkdownGenerator.cs" />
+    <Compile Include="MemberType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VSDocParser.cs" />
+    <Compile Include="XmlDocumentComment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

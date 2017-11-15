@@ -8,32 +8,6 @@ using System.Xml.Linq;
 
 namespace MarkdownWikiGenerator
 {
-    public enum MemberType
-    {
-        Field = 'F',
-        Property = 'P',
-        Type = 'T',
-        Event = 'E',
-        Method = 'M',
-        None = 0
-    }
-
-    public class XmlDocumentComment
-    {
-        public MemberType MemberType { get; set; }
-        public string ClassName { get; set; }
-        public string MemberName { get; set; }
-        public string Summary { get; set; }
-        public string Remarks { get; set; }
-        public Dictionary<string, string> Parameters { get; set; }
-        public string Returns { get; set; }
-
-        public override string ToString()
-        {
-            return MemberType + ":" + ClassName + "." + MemberName;
-        }
-    }
-
     public static class VSDocParser
     {
         // cheap, quick hack parser:)
@@ -65,6 +39,15 @@ namespace MarkdownWikiGenerator
                         ? match.Groups[2].Value + "." + match.Groups[3].Value
                         : match.Groups[2].Value;
 
+                    string example = string.Empty;
+
+                    var examplesNodes = x.Element("example")?.Element("code")?.Nodes();
+
+                    if (examplesNodes != null)
+                    {
+                        example = string.Concat(examplesNodes).Trim();
+                    }
+
                     return new XmlDocumentComment
                     {
                         MemberType = memberType,
@@ -73,7 +56,8 @@ namespace MarkdownWikiGenerator
                         Summary = summary.Trim(),
                         Remarks = remarks.Trim(),
                         Parameters = parameters,
-                        Returns = returns.Trim()
+                        Returns = returns.Trim(),
+                        Example = example,
                     };
                 })
                 .Where(x => x != null)
